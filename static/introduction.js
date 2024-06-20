@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
         case '4-7':
             content = `
                 <h1>雪天型人格</h1>
-                <img src="img/snowbabi.png" alt="雪天型人格">
+                <img src="/static/img/snowbabi.png" alt="雪天型人格">
                 <p>雪天型人格者是一類謹慎、穩健且注重安全和穩定的人。他們在風險管理和長期規劃方面表現出色，但在應變性和創新方向可能會遭到挑戰。理解並接受自己的性格特徵，可以幫助他們在發揮優勢的同時，不斷提升適應和創新能力，從而在各方面取得更大的成功。</p>
                 <h2>優勢：</h2>
                 <ul>
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
         case '8-10':
             content = `
                 <h1>陰天型人格</h1>
-                <img src="img/cloudi.png" alt="陰天型人格">
+                <img src="/static/img/cloudi.png" alt="陰天型人格">
                 <p>陰天型人格者是一類在風險和回報之間尋求平衡的個體。他們既不完全避免風險，也不過度冒險，而是講求精打細算的風險管理。...</p>
                 <h2>優勢：</h2>
                 <ul>
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
         case '11-14':
             content = `
                 <h1>晴天型人格</h1>
-                <img src="img/sunni.png" alt="晴天型人格">
+                <img src="/static/img/sunni.png" alt="晴天型人格">
                 <p>晴天型人格者是在風險和回報之間尋求理性平衡的個體。在決策時既謹慎又靈活。...</p>
                 <h2>優勢：</h2>
                 <ul>
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
         case '15-17':
             content = `
                 <h1>雷雨型人格</h1>
-                <img src="img/raini.png" alt="雷雨型人格">
+                <img src="/static/img/raini.png" alt="雷雨型人格">
                 <p>雷雨型人格者是一類在風險承擔上具備高度靈活性和動態平衡能力的個體。他們能夠在應對風險時展示出強大的適應力和創新能力。...</p>
                 <h2>優勢：</h2>
                 <ul>
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
         case '18-20':
             content = `
                 <h1>閃電型人格</h1>
-                <img src="img/lightni.png" alt="閃電型人格">
+                <img src="/static/img/lightni.png" alt="閃電型人格">
                 <p>閃電型人格者是一類勇於冒險、富有創新精神和自信心的個體。他們在風險和挑戰面前表現非常出色，能夠快速決策並達到高回報。...</p>
                 <h2>優勢：</h2>
                 <ul>

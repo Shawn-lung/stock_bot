@@ -3,46 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>結果頁面</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>最佳投資組合表現</h1>
+        <h1>投資組合建議</h1>
         <div id="investment-combo">
             <!-- 投資組合将显示在这里 -->
         </div>
         <button id="generate">生成數據</button>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('#generate').click(function() {
-                // 获取用户的风险偏好和选择的名人
-                const userType = '雪天型人格';  // 替换为实际的用户类型
-                const selectedCelebrity = '巴菲特';  // 替换为实际的名人选择
-
-                $.ajax({
-                    url: '/recommend',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ user_type: userType, selected_celebrity: selectedCelebrity }),
-                    success: function(response) {
-                        // 在页面上显示推荐的股票组合
-                        let comboHTML = '<h2>投資組合</h2><ul>';
-                        response.forEach(stock => {
-                            comboHTML += `<li>${stock.stock_code}</li>`;
-                        });
-                        comboHTML += '</ul>';
-                        $('#investment-combo').html(comboHTML);
-                    },
-                    error: function(error) {
-                        console.log('Error:', error);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="/static/result.js"></script>
 </body>
 </html>

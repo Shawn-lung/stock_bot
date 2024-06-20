@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const cors = require('cors');
+const path = require('path');
+const { spawn } = require('child_process');
 
 const app = express();
 const port = 3000;
 
-app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'static')));
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -24,7 +25,6 @@ connection.connect(err => {
     console.log('Connected to the database');
 });
 
-// 检查用户名并插入或使用现有数据
 app.post('/saveUserData', (req, res) => {
     const { name, age, gender, email } = req.body;
 
@@ -43,7 +43,19 @@ app.post('/saveUserData', (req, res) => {
     });
 });
 
-// 获取问题的 API
+app.post('/submitAnswer', (req, res) => {
+    const { user_id, question_id, selected_option, score } = req.body;
+    const query = 'INSERT INTO user_answers (user_id, question_id, selected_option, score) VALUES (?, ?, ?, ?)';
+    connection.query(query, [user_id, question_id, selected_option, score], (err, results) => {
+        if (err) {
+            console.error('Error submitting answer:', err);
+            res.status(500).send('Error submitting answer');
+            return;
+        }
+        res.status(200).json({ message: 'Answer submitted successfully' });
+    });
+});
+
 app.get('/questions', (req, res) => {
     const contextId = req.query.contextId;
     const query = 'SELECT * FROM questions WHERE context_id = ?';
@@ -57,18 +69,23 @@ app.get('/questions', (req, res) => {
     });
 });
 
-// 提交答案的 API
-app.post('/submitAnswer', (req, res) => {
-    const { user_id, question_id, selected_option, score } = req.body;
-    const query = 'INSERT INTO user_answers (user_id, question_id, selected_option, score) VALUES (?, ?, ?, ?)';
-    connection.query(query, [user_id, question_id, selected_option, score], (err, results) => {
-        if (err) {
-            console.error('Error submitting answer:', err);
-            res.status(500).send('Error submitting answer');
-            return;
-        }
-        res.status(200).json({ message: 'Answer submitted successfully' });
+app.post('/generateInvestmentCombo', (req, res) => {
+    const { riskType } = req.body;
+    const pythonProcess = spawn('python3', ['recommend_stocks.py', riskType]);
+
+    pythonProcess.stdout.on('data', (data) => {
+        const investmentCombo = data.toString();
+        res.status(200).json({ investmentCombo });
     });
+
+    pythonProcess.stderr.on('data', (data) => {
+        console.error('Error generating investment combo:', data.toString());
+        res.status(500).send('Error generating investment combo');
+    });
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'templates', req.path));
 });
 
 app.listen(port, () => {

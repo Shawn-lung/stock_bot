@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // 初始化图片路径
-    const basePath = 'img/';
+    const basePath = '/static/img/';
     document.getElementById('image1').src = basePath + '巴菲特.jpg';
     document.getElementById('image2').src = basePath + '葛拉漢.jpg';
     document.getElementById('image3').src = basePath + 'LBJ.jpg';

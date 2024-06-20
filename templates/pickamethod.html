@@ -4,34 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick a Celebrity</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <div class="container">
         <h1>選擇一個名人來幫你投資</h1>
         <div class="celebrity-options">
             <div class="celebrity">
-                <img id="image1" src="img/巴菲特.jpg" alt="巴菲特">
+                <img id="image1" src="/static/img/巴菲特.jpg" alt="巴菲特">
                 <input type="radio" name="celebrity" id="option1" value="1">
                 <label for="option1">巴菲特</label>
             </div>
             <div class="celebrity">
-                <img id="image2" src="img/葛拉漢.jpg" alt="葛拉漢">
+                <img id="image2" src="/static/img/葛拉漢.jpg" alt="葛拉漢">
                 <input type="radio" name="celebrity" id="option2" value="2">
                 <label for="option2">葛拉漢</label>
             </div>
             <div class="celebrity">
-                <img id="image3" src="img/LBJ.jpg" alt="LBJ">
+                <img id="image3" src="/static/img/LBJ.jpg" alt="LBJ">
                 <input type="radio" name="celebrity" id="option3" value="3">
                 <label for="option3">LBJ</label>
             </div>
             <div class="celebrity">
-                <img id="image4" src="img/麥可.jpg" alt="麥可">
+                <img id="image4" src="/static/img/麥可.jpg" alt="麥可">
                 <input type="radio" name="celebrity" id="option4" value="4">
                 <label for="option4">麥可</label>
             </div>
             <div class="celebrity">
-                <img id="image5" src="img/隨機.jpg" alt="隨機">
+                <img id="image5" src="/static/img/隨機.jpg" alt="隨機">
                 <input type="radio" name="celebrity" id="option5" value="5">
                 <label for="option5">隨機</label>
             </div>
@@ -41,7 +41,7 @@
             <button class="right-button" onclick="selectCelebrity()">確定選擇</button>
         </div>
     </div>
-    <script src="pickamethod.js"></script>
+    <script src="/static/pickamethod.js"></script>
 </body>
 </html>
 

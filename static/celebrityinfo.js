@@ -3,11 +3,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const celebrityId = params.get('celebrityId');
     
     const celebrities = {
-        1: { name: '巴菲特', intro: '巴菲特的介紹...', img: 'img/巴菲特.jpg' },
-        2: { name: '葛拉漢', intro: '葛拉漢的介紹...', img: 'img/葛拉漢.jpg' },
-        3: { name: 'LBJ', intro: 'LBJ的介紹...', img: 'img/LBJ.jpg' },
-        4: { name: '麥可', intro: '麥可的介紹...', img: 'img/麥可.jpg' },
-        5: { name: '隨機', intro: '隨機的介紹...', img: 'img/隨機.jpg' }
+        1: { name: '巴菲特', intro: '巴菲特的介紹...', img: '/static/img/巴菲特.jpg' },
+        2: { name: '葛拉漢', intro: '葛拉漢的介紹...', img: '/static/img/葛拉漢.jpg' },
+        3: { name: 'LBJ', intro: 'LBJ的介紹...', img: '/static/img/LBJ.jpg' },
+        4: { name: '麥可', intro: '麥可的介紹...', img: '/static/img/麥可.jpg' },
+        5: { name: '隨機', intro: '隨機的介紹...', img: '/static/img/隨機.jpg' }
     };
 
     const celebrity = celebrities[celebrityId];
