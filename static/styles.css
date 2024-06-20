@@ -1,0 +1,167 @@
+/* 全局样式 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8d568;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 容器样式 */
+.container {
+    text-align: center;
+    background-color: #fff2cc;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
+    text-align: left;
+}
+
+h1 {
+    font-size: 24px;
+    color: #ff6600;
+    margin: 0;
+    padding: 10px;
+}
+
+/* 图像样式 */
+img {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 100px;
+    height: auto;
+}
+
+/* 表单样式 */
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #ffcc66;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: #ff9966;
+}
+
+/* 选项按钮样式 */
+.option-button {
+    background-color: #ffcc66;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.option-button:hover {
+    background-color: #ff9966;
+}
+
+/* 按钮容器样式 */
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* 列表样式 */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+.celebrity-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.celebrity {
+    text-align: center;
+    margin: 20px;
+}
+
+.celebrity img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.celebrity label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.left-button {
+    background-color: #ffcc66;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 0;
+}
+
+.left-button:hover {
+    background-color: #ff9966;
+}
+
+.right-button {
+    background-color: #ffcc66;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 0;
+}
+
+.right-button:hover {
+    background-color: #ff9966;
+}
+#investment-combo {
+    margin-top: 20px;
+}

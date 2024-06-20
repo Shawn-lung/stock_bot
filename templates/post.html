@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投資理由</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>您投資的主要理由為何？</h1>
+        <div class="button-container">
+            <button id="retirement" class="option-button">
+                <span class="emoji">👴</span>
+                <span>退休金</span>
+            </button>
+            <button id="firstBucket" class="option-button">
+                <span class="emoji">💰</span>
+                <span>第一桶金</span>
+            </button>
+            <button id="assetProtection" class="option-button">
+                <span class="emoji">🏦</span>
+                <span>財產保值</span>
+            </button>
+            <button id="educationSavings" class="option-button">
+                <span class="emoji">🎓</span>
+                <span>教育存款</span>
+            </button>
+            <button id="buyHouse" class="option-button">
+                <span class="emoji">🏠</span>
+                <span>買房</span>
+            </button>
+            <button id="wealthAccumulation" class="option-button">
+                <span class="emoji">💵</span>
+                <span>長期財富累積</span>
+            </button>
+        </div>
+    </div>
+    <script src="post.js"></script>
+</body>
+</html>

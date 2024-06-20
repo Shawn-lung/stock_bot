@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrity Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 id="celebrity-name">名人姓名</h1>
+        <img id="celebrity-image" src="" alt="名人图片">
+        <p id="celebrity-intro">名人介紹</p>
+        <div class="button-container">
+            <button class="left-button" onclick="goBack()">返回</button>
+            <button class="right-button" onclick="forward()">確定選擇</button>
+        </div>
+    </div>
+    <script src="celebrityinfo.js"></script>
+</body>
+</html>
