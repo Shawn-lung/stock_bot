@@ -3,12 +3,14 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
 const { spawn } = require('child_process');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
+app.use(cors());
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -70,22 +72,32 @@ app.get('/questions', (req, res) => {
 });
 
 app.post('/generateInvestmentCombo', (req, res) => {
-    const { riskType } = req.body;
-    const pythonProcess = spawn('python3', ['recommend_stocks.py', riskType]);
+    const { riskType, celebType } = req.body;
+    const pythonProcess = spawn('python3', ['recommend_stocks.py', riskType, celebType]);
+
+    let dataString = '';
 
     pythonProcess.stdout.on('data', (data) => {
-        const investmentCombo = data.toString();
-        res.status(200).json({ investmentCombo });
+        dataString += data.toString();
     });
 
     pythonProcess.stderr.on('data', (data) => {
-        console.error('Error generating investment combo:', data.toString());
-        res.status(500).send('Error generating investment combo');
+        console.error(`Error from Python script: ${data.toString()}`);
     });
-});
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'templates', req.path));
+    pythonProcess.on('close', (code) => {
+        if (code === 0) {
+            try {
+                const result = JSON.parse(dataString);
+                res.status(200).json(result);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                res.status(500).json({ message: 'Error parsing JSON' });
+            }
+        } else {
+            res.status(500).json({ message: 'Error generating investment combo' });
+        }
+    });
 });
 
 app.listen(port, () => {

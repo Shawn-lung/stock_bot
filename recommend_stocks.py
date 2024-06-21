@@ -1,42 +1,58 @@
-import json
+import sys
+import os
 import pandas as pd
+import json
 
-def load_data(file_path):
-    with open(file_path, 'r') as f:
-        data = json.load(f)
-    return pd.DataFrame(data)
+def recommend_stocks(risk_type, celeb_type):
+    try:
+        # 定义文件路径
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        high_risk_file = os.path.join(current_dir, 'high_risk_stock_data.csv')
+        medium_risk_file = os.path.join(current_dir, 'medium_risk_stock_data.csv')
+        low_risk_file = os.path.join(current_dir, 'low_risk_stock_data.csv')
 
-def recommend_stocks(user_type, selected_celebrity):
-    risk_preferences = {
-        '雪天型人格': {'low': 6, 'medium': 3, 'high': 1},
-        '陰天型人格': {'low': 5, 'medium': 4, 'high': 1},
-        '晴天型人格': {'low': 4, 'medium': 4, 'high': 2},
-        '雷雨型人格': {'low': 3, 'medium': 4, 'high': 3},
-        '閃電型人格': {'low': 2, 'medium': 3, 'high': 5}
-    }
+        # 读取CSV文件
+        high_risk_stocks = pd.read_csv(high_risk_file)
+        medium_risk_stocks = pd.read_csv(medium_risk_file)
+        low_risk_stocks = pd.read_csv(low_risk_file)
 
-    celebrity_scores = {
-        '巴菲特': 'Buffet_Score',
-        '葛拉漢': 'Graham_Score',
-        'LBJ': 'OShaughnessy_Score',
-        '麥可': 'Murphy_Score'
-    }
 
-    low_risk_df = load_data('low_risk_stock_data.json')
-    medium_risk_df = load_data('medium_risk_stock_data.json')
-    high_risk_df = load_data('high_risk_stock_data.json')
+        # 风险类型对应的投资比例
+        risk_allocation = {
+            '雪天型人格': {'low': 6, 'medium': 3, 'high': 1},
+            '陰天型人格': {'low': 5, 'medium': 4, 'high': 1},
+            '晴天型人格': {'low': 4, 'medium': 4, 'high': 2},
+            '雷雨型人格': {'low': 3, 'medium': 4, 'high': 3},
+            '閃電型人格': {'low': 2, 'medium': 3, 'high': 5}
+        }
 
-    risk_allocation = risk_preferences.get(user_type)
-    if not risk_allocation:
-        raise ValueError(f"Unknown user type: {user_type}")
+        # 名人对应的评分列
+        celeb_score_map = {
+            1: 'Buffet_Score',
+            2: 'Graham_Score',
+            3: 'OShaughnessy_Score',
+            4: 'Murphy_Score'
+        }
 
-    score_column = celebrity_scores.get(selected_celebrity)
-    if not score_column:
-        raise ValueError(f"Unknown celebrity: {selected_celebrity}")
+        allocation = risk_allocation[risk_type]
+        score_column = celeb_score_map[celeb_type]
 
-    recommended_stocks = []
-    recommended_stocks.extend(low_risk_df.nlargest(risk_allocation['low'], score_column).to_dict('records'))
-    recommended_stocks.extend(medium_risk_df.nlargest(risk_allocation['medium'], score_column).to_dict('records'))
-    recommended_stocks.extend(high_risk_df.nlargest(risk_allocation['high'], score_column).to_dict('records'))
+        low_risk_selected = low_risk_stocks.nlargest(allocation['low'], score_column)
+        medium_risk_selected = medium_risk_stocks.nlargest(allocation['medium'], score_column)
+        high_risk_selected = high_risk_stocks.nlargest(allocation['high'], score_column)
 
-    return recommended_stocks
+        selected_stocks = pd.concat([low_risk_selected, medium_risk_selected, high_risk_selected])
+
+        return selected_stocks.to_dict(orient='records')
+    except Exception as e:
+        return {'error': str(e)}
+
+if __name__ == '__main__':
+    try:
+        risk_type = sys.argv[1]
+        celeb_type = int(sys.argv[2])
+        investment_combo = recommend_stocks(risk_type, celeb_type)
+        print(json.dumps(investment_combo, ensure_ascii=False, indent=4))
+    except Exception as e:
+        print(json.dumps({'error': str(e)}))
+        sys.exit(1)

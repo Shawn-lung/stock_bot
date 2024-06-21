@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import numpy as np
-import json
 from sklearn.preprocessing import MinMaxScaler
 
 class StockScorer:
@@ -13,13 +12,11 @@ class StockScorer:
         self.df = None
 
     def load_data(self):
-        with open(self.input_file, 'r') as json_file:
-            data = json.load(json_file)
-        self.df = pd.DataFrame(data)
+        self.df = pd.read_csv(self.input_file)
         print(f"Initial rows: {len(self.df)}")
 
     def preprocess_data(self):
-        required_columns = ["EPS", "Beta", "PE_Ratio", "ROE", "Gross_margin", "PB_Ratio", "Revenue_per_share", "Operating_margin"]
+        required_columns = ["EPS", "Beta", "PE_Ratio", "ROE", "ROA", "Gross_margin", "Operating_margin", "Trailing_PE_Ratio", "PB_Ratio", "Revenue_per_share"]
         self.df = self.df.dropna(subset=required_columns)
         print(f"Rows after dropping NaNs: {len(self.df)}")
         for col in required_columns:
@@ -110,9 +107,9 @@ class StockScorer:
         medium_risk = self.df[(self.df['Beta'] >= 0.8) & (self.df['Beta'] <= 1.2)]
         low_risk = self.df[self.df['Beta'] < 0.8]
 
-        high_risk.to_json(self.high_risk_file, orient='records', lines=True)
-        medium_risk.to_json(self.medium_risk_file, orient='records', lines=True)
-        low_risk.to_json(self.low_risk_file, orient='records', lines=True)
+        high_risk.to_csv(self.high_risk_file, index=False)
+        medium_risk.to_csv(self.medium_risk_file, index=False)
+        low_risk.to_csv(self.low_risk_file, index=False)
 
     def process(self):
         self.load_data()

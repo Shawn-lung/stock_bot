@@ -26,5 +26,9 @@ function goBack() {
     window.location.href = 'pickamethod.html';
 }
 function forward() {
-    window.location.href = 'result.html';
+    const params = new URLSearchParams(window.location.search);
+    const celebrityId = params.get('celebrityId');
+    const riskType = params.get('riskType');
+    window.location.href = `result.html?celebrityId=${celebrityId}&riskType=${riskType}`;
 }
+

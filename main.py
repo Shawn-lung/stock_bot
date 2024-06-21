@@ -5,10 +5,10 @@ from score import StockScorer
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))
     stock_list_file = os.path.join(current_dir, "tw_stock_codes.txt")
-    input_file = os.path.join(current_dir, "taiex_mid100_stock_data.json")
-    high_risk_file = os.path.join(current_dir, "high_risk_stock_data.json")
-    medium_risk_file = os.path.join(current_dir, "medium_risk_stock_data.json")
-    low_risk_file = os.path.join(current_dir, "low_risk_stock_data.json")
+    input_file = os.path.join(current_dir, "taiex_mid100_stock_data.csv")
+    high_risk_file = os.path.join(current_dir, "high_risk_stock_data.csv")
+    medium_risk_file = os.path.join(current_dir, "medium_risk_stock_data.csv")
+    low_risk_file = os.path.join(current_dir, "low_risk_stock_data.csv")
 
     downloader = StockDownloader(stock_list_file, input_file)
     downloader.process()

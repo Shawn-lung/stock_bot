@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const contentElement = document.getElementById('content');
     let content = '';
+    let riskType = '';
 
     switch (scoreRange) {
         case '4-7':
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button onclick="recommend()">讓名人幫你選股！</button>
                 </div>
             `;
+            riskType = '雪天型人格';
             break;
         case '8-10':
             content = `
@@ -51,8 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button onclick="recommend()">讓名人幫你選股！</button>
                 </div>
             `;
+            riskType = '陰天型人格';
             break;
         case '11-14':
+            riskType = '晴天型人格';
             content = `
                 <h1>晴天型人格</h1>
                 <img src="/static/img/sunni.png" alt="晴天型人格">
@@ -74,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button onclick="recommend()">讓名人幫你選股！</button>
                 </div>
             `;
+
             break;
         case '15-17':
             content = `
@@ -97,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button onclick="recommend()">讓名人幫你選股！</button>
                 </div>
             `;
+            riskType = '雷雨型人格';
             break;
         case '18-20':
             content = `
@@ -120,13 +126,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button onclick="recommend()">讓名人幫你選股！</button>
                 </div>
             `;
+            riskType = '閃電型人格';
+
             break;
         default:
             content = '<p>無法判斷您的風險類型。</p>';
+            riskType = '未知';
             break;
     }
 
     contentElement.innerHTML = content;
+    localStorage.setItem('riskType', riskType);
+    console.log(riskType);
 });
 
 function retakeTest() {
