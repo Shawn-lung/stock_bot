@@ -130,8 +130,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
             break;
         default:
-            content = '<p>無法判斷您的風險類型。</p>';
-            riskType = '未知';
+            riskType = localStorage.getItem('riskType');
+            content = `
+            <h1>${riskType}</h1>
+            <div class="buttons">
+                <button onclick="retakeTest()">返回重測</button>
+                <button onclick="recommend()">讓名人幫你選股！</button>
+            </div>
+            `;
+            console.log(riskType);
             break;
     }
 

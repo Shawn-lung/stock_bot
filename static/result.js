@@ -40,3 +40,8 @@ document.getElementById('generate').addEventListener('click', async () => {
         console.error('Error generating investment combo:', error);
     }
 });
+
+
+document.getElementById('goBack').addEventListener('click', () => {
+    window.location.href = 'pickamethod.html';
+});

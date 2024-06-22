@@ -1,4 +1,3 @@
-/* 全局样式 */
 body {
     font-family: Arial, sans-serif;
     background-color: #f8d568;
@@ -9,7 +8,6 @@ body {
     height: 100vh;
 }
 
-/* 容器样式 */
 .container {
     text-align: center;
     background-color: #fff2cc;
@@ -27,7 +25,6 @@ h1 {
     padding: 10px;
 }
 
-/* 图像样式 */
 img {
     display: block;
     margin: 0 auto 20px;
@@ -35,7 +32,6 @@ img {
     height: auto;
 }
 
-/* 表单样式 */
 form {
     margin-top: 20px;
 }
@@ -71,7 +67,6 @@ button:hover {
     background-color: #ff9966;
 }
 
-/* 选项按钮样式 */
 .option-button {
     background-color: #ffcc66;
     border: none;
@@ -88,13 +83,11 @@ button:hover {
     background-color: #ff9966;
 }
 
-/* 按钮容器样式 */
 .buttons {
     text-align: center;
     margin-top: 20px;
 }
 
-/* 列表样式 */
 ul {
     list-style-type: none;
     padding: 0;
@@ -103,6 +96,7 @@ ul {
 ul li {
     margin-bottom: 10px;
 }
+
 .celebrity-options {
     display: flex;
     flex-wrap: wrap;
@@ -162,6 +156,28 @@ ul li {
 .right-button:hover {
     background-color: #ff9966;
 }
+
 #investment-combo {
     margin-top: 20px;
+}
+
+.generate-btn {
+    background-color: #ff9966;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.generate-btn:hover {
+    background-color: #218838;
+}
+
+.celebrity-image {
+    width: auto;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
 }

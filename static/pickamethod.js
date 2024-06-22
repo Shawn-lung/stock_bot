@@ -20,5 +20,6 @@ function selectCelebrity() {
 }
 
 function goBack() {
-    window.location.href = 'introduction.html';  // 假设返回到 introduction.html 页面
+    const riskType = localStorage.getItem('riskType');
+    window.location.href = `introduction.html?riskType=${riskType}`;  // 假设返回到 introduction.html 页面
 }

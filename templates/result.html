@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>結果頁面</title>
+    <title>投資組合</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>投資組合建議</h1>
-        <div id="investment-combo">
-            <!-- 投資組合将显示在这里 -->
+        <h1>投資組合</h1>
+        <div id="investment-combo" class="investment-combo">
+            <!-- Recommendations will be appended here -->
         </div>
-        <button id="generate">生成數據</button>
+        <div class="button-container">
+            <button id="goBack" class="left-button">返回</button>
+            <button id="generate" class="right-button">生成數據</button>
+        </div>
     </div>
     <script src="/static/result.js"></script>
 </body>
