@@ -19,28 +19,31 @@ document.getElementById('generate').addEventListener('click', async () => {
             throw new Error('Network response was not ok');
         }
 
-        const investmentCombo = await response.json();
-        console.log('Investment Combo:', investmentCombo);
+        const result = await response.json();
+        console.log('Received result:', result);
 
-        const comboDiv = document.getElementById('investment-combo');
-        comboDiv.innerHTML = '';
+        const { investment_combo, optimal_weights } = result;
 
-        if (Array.isArray(investmentCombo)) {
-            investmentCombo.forEach(stock => {
+        if (Array.isArray(investment_combo) && Array.isArray(optimal_weights) && investment_combo.length === optimal_weights.length) {
+            const comboDiv = document.getElementById('investment-combo');
+            comboDiv.innerHTML = ''; // 清空现有内容
+
+            investment_combo.forEach((stock, index) => {
                 const stockElement = document.createElement('div');
-                stockElement.innerHTML = `
-                    <p>${stock.stock_code}</p>
-                `;
+                stockElement.innerHTML = `<p>${stock.stock_code}: ${(optimal_weights[index] * 100).toFixed(2)}%</p>`;
                 comboDiv.appendChild(stockElement);
             });
         } else {
-            console.error('Expected an array but got:', investmentCombo);
+            console.error('Mismatch in lengths of investment_combo and optimal_weights');
+            alert('Mismatch in lengths of investment_combo and optimal_weights');
+            console.log('investment_combo:', investment_combo);
+            console.log('optimal_weights:', optimal_weights);
         }
     } catch (error) {
         console.error('Error generating investment combo:', error);
+        alert('Error generating investment combo: ' + error.message);
     }
 });
-
 
 document.getElementById('goBack').addEventListener('click', () => {
     window.location.href = 'pickamethod.html';

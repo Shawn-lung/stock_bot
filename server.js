@@ -10,8 +10,14 @@ const port = 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
-app.use(cors());
 
+app.use(cors({
+    origin: '*', // 允许所有来源访问
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
+}));
+
+// 数据库连接配置
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'new_user',
@@ -27,6 +33,7 @@ connection.connect(err => {
     console.log('Connected to the database');
 });
 
+// 保存用户数据
 app.post('/saveUserData', (req, res) => {
     const { name, age, gender, email } = req.body;
 
@@ -45,6 +52,7 @@ app.post('/saveUserData', (req, res) => {
     });
 });
 
+// 提交用户答案
 app.post('/submitAnswer', (req, res) => {
     const { user_id, question_id, selected_option, score } = req.body;
     const query = 'INSERT INTO user_answers (user_id, question_id, selected_option, score) VALUES (?, ?, ?, ?)';
@@ -58,6 +66,7 @@ app.post('/submitAnswer', (req, res) => {
     });
 });
 
+// 获取问题列表
 app.get('/questions', (req, res) => {
     const contextId = req.query.contextId;
     const query = 'SELECT * FROM questions WHERE context_id = ?';
@@ -71,14 +80,18 @@ app.get('/questions', (req, res) => {
     });
 });
 
+// 生成投资组合
 app.post('/generateInvestmentCombo', (req, res) => {
     const { riskType, celebType } = req.body;
+    console.log(`Received request with riskType: ${riskType} and celebType: ${celebType}`);
+
     const pythonProcess = spawn('python3', ['recommend_stocks.py', riskType, celebType]);
 
     let dataString = '';
 
     pythonProcess.stdout.on('data', (data) => {
         dataString += data.toString();
+        console.log(`Python script output: ${data}`);
     });
 
     pythonProcess.stderr.on('data', (data) => {
@@ -89,12 +102,14 @@ app.post('/generateInvestmentCombo', (req, res) => {
         if (code === 0) {
             try {
                 const result = JSON.parse(dataString);
+                console.log('Python script result:', result);
                 res.status(200).json(result);
             } catch (e) {
                 console.error('Error parsing JSON:', e);
                 res.status(500).json({ message: 'Error parsing JSON' });
             }
         } else {
+            console.error(`Python script exited with code: ${code}`);
             res.status(500).json({ message: 'Error generating investment combo' });
         }
     });
