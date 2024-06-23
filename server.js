@@ -1,3 +1,5 @@
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
@@ -8,14 +10,36 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
+// 读取生成的SSL证书和私钥
+const options = {
+    key: fs.readFileSync(path.join(__dirname, 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert.pem'))
+};
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
 
+const allowedOrigins = ['https://127.0.0.1:5500', 'https://127.0.0.1:8080', 'https://shawn-lung.github.io', 'https://125.228.8.172'];
+
 app.use(cors({
-    origin: '*', // 允许所有来源访问
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
 }));
+
+app.options('*', (req, res) => {
+    res.sendStatus(200);
+});
+
+app.get('/', (req, res) => {
+    res.send('Hello, World!');
+});
 
 // 数据库连接配置
 const connection = mysql.createConnection({
@@ -103,18 +127,24 @@ app.post('/generateInvestmentCombo', (req, res) => {
             try {
                 const result = JSON.parse(dataString);
                 console.log('Python script result:', result);
+                res.setHeader('Access-Control-Allow-Origin', '*');
                 res.status(200).json(result);
             } catch (e) {
                 console.error('Error parsing JSON:', e);
+                res.setHeader('Access-Control-Allow-Origin', '*');
                 res.status(500).json({ message: 'Error parsing JSON' });
             }
         } else {
             console.error(`Python script exited with code: ${code}`);
+            res.setHeader('Access-Control-Allow-Origin', '*');
             res.status(500).json({ message: 'Error generating investment combo' });
         }
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+// 启动HTTPS服务器
+const server = https.createServer(options, app);
+
+server.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on https://localhost:${port}`);
 });
