@@ -13,7 +13,9 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         email: email
     };
 
-    fetch('http://localhost:3000/saveUserData', {
+    const apiBaseURL = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://shawn-lung.github.io';
+
+    fetch(`${apiBaseURL}/saveUserData`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -27,8 +29,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         } else {
             alert('User saved successfully.');
         }
-        // 重定向到下一页
-        window.location.href = 'post.html';  // 替换为你的下一页的URL
+        window.location.href = 'post.html';
     })
     .catch((error) => {
         console.error('Error:', error);

@@ -47,11 +47,12 @@ def get_stock_data(stock_code):
         returns = hist['Close'].pct_change().dropna()
         expected_return = returns.mean()
         volatility = returns.std()
-        log_message(f"Data for {stock_code}: expected_return={expected_return}, volatility={volatility}")
-        return expected_return, volatility
+        current_price = hist['Close'].iloc[-1]  # 獲取當前價格
+        log_message(f"Data for {stock_code}: expected_return={expected_return}, volatility={volatility}, current_price={current_price}")
+        return expected_return, volatility, current_price
     except Exception as e:
         log_message(f"Error fetching data for {stock_code}: {e}")
-        return None, None
+        return None, None, None
 
 def select_stocks(risk_type, celeb_type):
     preference = risk_preferences[risk_type]
@@ -62,44 +63,48 @@ def select_stocks(risk_type, celeb_type):
     # 選擇低風險股票
     low_risk_stocks = low_risk_stock_data.nlargest(preference["low"], score_column)
     for index, row in low_risk_stocks.iterrows():
-        expected_return, volatility = get_stock_data(row['stock_code'])
-        if expected_return is not None and volatility is not None:
+        expected_return, volatility, current_price = get_stock_data(row['stock_code'])
+        if expected_return is not None and volatility is not None and current_price is not None:
             selected_stocks.append({
                 "stock_code": row['stock_code'],
                 "expected_return": expected_return,
-                "volatility": volatility
+                "volatility": volatility,
+                "current_price": current_price
             })
 
     # 選擇市場風險股票
     medium_risk_stocks = medium_risk_stock_data.nlargest(preference["medium"], score_column)
     for index, row in medium_risk_stocks.iterrows():
-        expected_return, volatility = get_stock_data(row['stock_code'])
-        if expected_return is not None and volatility is not None:
+        expected_return, volatility, current_price = get_stock_data(row['stock_code'])
+        if expected_return is not None and volatility is not None and current_price is not None:
             selected_stocks.append({
                 "stock_code": row['stock_code'],
                 "expected_return": expected_return,
-                "volatility": volatility
+                "volatility": volatility,
+                "current_price": current_price
             })
 
     # 選擇高風險股票
     high_risk_stocks = high_risk_stock_data.nlargest(preference["high"], score_column)
     for index, row in high_risk_stocks.iterrows():
-        expected_return, volatility = get_stock_data(row['stock_code'])
-        if expected_return is not None and volatility is not None:
+        expected_return, volatility, current_price = get_stock_data(row['stock_code'])
+        if expected_return is not None and volatility is not None and current_price is not None:
             selected_stocks.append({
                 "stock_code": row['stock_code'],
                 "expected_return": expected_return,
-                "volatility": volatility
+                "volatility": volatility,
+                "current_price": current_price
             })
 
     return selected_stocks
 
-def monte_carlo_optimization(investment_combo, num_simulations=10000):
+def monte_carlo_optimization(investment_combo, investment_amount, num_simulations=10000):
     num_assets = len(investment_combo)
     results = np.zeros((3, num_simulations))
 
     returns = np.array([stock['expected_return'] for stock in investment_combo])
     volatilities = np.array([stock['volatility'] for stock in investment_combo])
+    current_prices = np.array([stock['current_price'] for stock in investment_combo])
 
     all_weights = np.zeros((num_simulations, num_assets))  # 儲存每次模擬的權重
 
@@ -119,24 +124,30 @@ def monte_carlo_optimization(investment_combo, num_simulations=10000):
     max_sharpe_idx = np.argmax(results[2])
     optimal_weights = all_weights[max_sharpe_idx, :]
 
-    return optimal_weights.tolist()
+    # 計算每個股票的股數
+    shares = (investment_amount * optimal_weights) / current_prices
+    total_investment = np.sum(shares * current_prices)
+
+
+    return shares.tolist()
 
 def main():
     risk_type = sys.argv[1]
     celeb_type = sys.argv[2]
+    investment_amount = float(sys.argv[3])
 
     investment_combo = select_stocks(risk_type, celeb_type)
     if not investment_combo:
         print(json.dumps({"error": "No valid stock data found"}))
         return
 
-    optimal_weights = monte_carlo_optimization(investment_combo)
+    shares = monte_carlo_optimization(investment_combo, investment_amount)
 
     result = {
         "investment_combo": investment_combo,
-        "optimal_weights": optimal_weights
+        "shares": shares
     }
-
+    
     print(json.dumps(result))
 
 if __name__ == "__main__":

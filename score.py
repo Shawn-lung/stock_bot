@@ -13,12 +13,10 @@ class StockScorer:
 
     def load_data(self):
         self.df = pd.read_csv(self.input_file)
-        print(f"Initial rows: {len(self.df)}")
 
     def preprocess_data(self):
         required_columns = ["EPS", "Beta", "PE_Ratio", "ROE", "ROA", "Gross_margin", "Operating_margin", "Trailing_PE_Ratio", "PB_Ratio", "Revenue_per_share"]
         self.df = self.df.dropna(subset=required_columns)
-        print(f"Rows after dropping NaNs: {len(self.df)}")
         for col in required_columns:
             self.df[col] = pd.to_numeric(self.df[col], errors='coerce')
 
@@ -35,11 +33,7 @@ class StockScorer:
         for col, norm_col in normalized_columns.items():
             scaler = MinMaxScaler()
             self.df[norm_col] = scaler.fit_transform(self.df[[col]])
-            print(f"{col} normalized. First 5 values:")
-            print(self.df[norm_col].head())
 
-        print("Normalized data sample:")
-        print(self.df[list(normalized_columns.values())].describe())
 
     def calculate_scores(self):
         def buffet_score(row):

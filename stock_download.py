@@ -31,7 +31,6 @@ class StockDownloader:
             revenuePerShare = stock_info.get('revenuePerShare', np.nan)
             return [stock_code, trailingEps, beta, forwardPE, returnOnEquity, returnOnAssets, grossMargin, operatingMargin, peRatio, pbRatio, revenuePerShare]
         except Exception as e:
-            print(f"Error fetching data for {stock_code}: {e}")
             return [stock_code, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan]
 
     def download_data(self):
