@@ -598,3 +598,13 @@ Data for 4763.TW: expected_return=0.00360561350203422, volatility=0.037031151136
 Data for 6409.TW: expected_return=0.00020206321138410905, volatility=0.02364180552983006, current_price=1850.0
 Data for 3443.TW: expected_return=0.0006096043882554128, volatility=0.033470040204120546, current_price=1630.0
 Data for 8478.TW: expected_return=-0.0012602225799009, volatility=0.026539225279815608, current_price=383.5
+Data for 1808.TW: expected_return=0.001926534601112101, volatility=0.02154331984648421, current_price=114.0
+Data for 1519.TW: expected_return=0.008274207272683898, volatility=0.04440583000214843, current_price=947.0
+Data for 2731.TW: expected_return=-0.00022772895846128813, volatility=0.02252111893179711, current_price=157.5
+Data for 2404.TW: expected_return=0.0025995407294236, volatility=0.023722346754972628, current_price=356.0
+Data for 2739.TW: expected_return=-0.00013027306611300936, volatility=0.03425558008939491, current_price=65.80000305175781
+Data for 4763.TW: expected_return=0.0036056135977217845, volatility=0.03703115376231268, current_price=924.0
+Data for 6409.TW: expected_return=0.00020206321138410905, volatility=0.02364180552983006, current_price=1850.0
+Data for 3443.TW: expected_return=0.0006096043882554128, volatility=0.033470040204120546, current_price=1630.0
+Data for 3034.TW: expected_return=0.0018417027810074468, volatility=0.018223495709914966, current_price=618.0
+Data for 8478.TW: expected_return=-0.0012602225799009, volatility=0.026539225279815608, current_price=383.5
